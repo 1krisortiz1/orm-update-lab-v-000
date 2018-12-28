@@ -40,7 +40,7 @@ class Student
         SELECT *
         FROM students
         WHERE name = ?
-
+        LIMIT 1
         SQL
 
         DB[:conn].execute(sql, name).map do |row|
@@ -49,11 +49,7 @@ class Student
     end
 
     def self.new_from_db(row)
-        student = self.new
-        student.id = row[0]
-        student.name = row[1]
-        student.grade = row[2]
-        student
+        self.new(row[0], row[1], row[2])
     end
 
     def update
